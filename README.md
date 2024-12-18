@@ -42,40 +42,40 @@ These attributes are included in the original data:
 * churn - Has the client churned over the next 3 months.
 
 These attributes are added to the data from part 2:
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
+* variance_1y_off_peak_var - The price variance of energy during off peak hours for 1 year.
+* variance_1y_peak_var - The price variance of energy during peak hours for 1 year.
+* variance_1y_mid_peak_var - The price variance of energy during mid peak hours for 1 year.
+* variance_1y_off_peak_fix - The price variance of power during off peak hours for 1 year.
+* variance_1y_peak_fix - The price variance of power during peak hours for 1 year.
+* variance_1y_mid_peak_fix - The price variance of power during mid peak hours for 1 year.
+* variance_6m_off_peak_var - The price variance of energy during off peak hours for the last 6 months of the year.
+* variance_6m_peak_var - The price variance of energy during peak hours for the last 6 months of the year.
+* variance_6m_mid_peak_var - The price variance of energy during mid peak hours for the last 6 months of the year.
+* variance_6m_off_peak_fix - The price variance of power during off peak hours for the last 6 months of the year.
+* variance_6m_peak_fix - The price variance of power during peak hours for the last 6 months of the year.
+* variance_6m_mid_peak_fix - The price variance of power during mid peak hours for the last 6 months of the year.
+* off_peak_price_difference_energy - The price difference of energy during off peak hours from the beginning of the year to the end of the year.
+* off_peak_price_difference_power - The price difference of power during off peak hours from the beginning of the year to the end of the year.
+* energy_mean_diff_off_peak_peak - The average difference in energy price between off peak and peak hours.
+* energy_mean_diff_peak_mid_peak - The average difference in energy price between peak and mid peak hours.
+* energy_mean_diff_off_peak_mid_peak - The average difference in energy price between off peak and mid peak hours.
+* power_mean_diff_off_peak_peak - The average difference in power price between off peak and peak hours.
+* power_mean_diff_peak_mid_peak - The average difference in power price between peak and mid peak hours.
+* power_mean_diff_off_peak_mid_peak - The average difference in power price between off peak and mid peak hours.
+* max_diff_peak_mid_peak_var - The greatest difference in energy price between peak and mid peak hours
+*	max_diff_off_peak_mid_peak_var - The greatest difference in energy price between off peak and mid peak hours.
+* max_diff_peak_mid_peak_fix - The greatest difference in power price between peak and mid peak hours
+*	max_diff_off_peak_mid_peak_fix - The greatest difference in power price between off peak and mid peak hours.
+* months_activ - Number of months the contract is activated.
+* months_to_end - Number of months until the end of the contract.
+* months_modif_prod - Number of months since the last modification of the contract.
+* months_renewal - Number of months until the next renewal.
+* tenure - The number of years a customer has been in business with PowerCo.
+* sales_channel_MISSING - Dummy variable representing a sales channel.
+* sales_channel_ewpakwlliwisiwduibdlfmalxowmwpci - Dummy variable representing a sales channel.
+* sales_channel_foosdfpfkusacimwkcsosbicdxkicaua - Dummy variable representing a sales channel.
+* sales_channel_lmkebamcaaclubfxadlmueccxoimlema - Dummy variable representing a sales channel.
+* sales_channel_usilxuppasemubllopkaafesmlibmsdf - Dummy variable representing a sales channel.
+* origin_kamkkxfxxuwbdslkwifmmcsiusiuosws - Dummy variable representing the electricity campaign the customer first subscribed to.
+* origin_ldkssxwpmemidmecebumciepifcamkci - Dummy variable representing the electricity campaign the customer first subscribed to.
+* origin_lxidpiddsbxsbosboudacockeimpuepw - Dummy variable representing the electricity campaign the customer first subscribed to.
