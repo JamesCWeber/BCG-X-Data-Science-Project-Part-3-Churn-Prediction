@@ -79,3 +79,144 @@ These attributes are added to the data from part 2:
 * origin_kamkkxfxxuwbdslkwifmmcsiusiuosws - Dummy variable representing the electricity campaign the customer first subscribed to.
 * origin_ldkssxwpmemidmecebumciepifcamkci - Dummy variable representing the electricity campaign the customer first subscribed to.
 * origin_lxidpiddsbxsbosboudacockeimpuepw - Dummy variable representing the electricity campaign the customer first subscribed to.
+
+## Data Modelling
+**Data modeling is the process of converting raw data into insight using algorithms and other systems of equations.** The machine learning model that we will use to predict churn is the Random Forest model. The Random Forest model is an algorithm that combines the output of multiple decision trees to reach a single decision.
+
+A copy of this data modelling project is included in this repository under the file name: James Weber Random Forest Model.ipynb.
+
+### 1. Importing Libraries and Data
+We must first import libraries which contains the commands we need to create a Random Forest model.
+Then we import the data from the data_for_predictions.csv file into the df dataframe. The data_for_predictions.csv file is the final output from part 2 of this project. It is a modified version of the client data with 34 features added to it in order to improve the Random Forest model's predictive ability.
+```
+# Import libraries.
+
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning)
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+from datetime import datetime
+import matplotlib.pyplot as plt
+
+%matplotlib inline
+
+sns.set(color_codes = True)
+
+from sklearn import metrics
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV
+from sklearn.tree import plot_tree
+
+# Use the read_csv() command to import .csv files.
+# Create a client_df dataframe for the client data and a price_df dataframe for the price data.
+
+df = pd.read_csv(r'C:/Users/jwebe/OneDrive/Desktop/data_for_predictions.csv')
+```
+
+## 2. Data Sampling
+**Random Forest model is a supervised learning algorithm. Supervised learning algorithms requires training data to create the model.** Once the model is created using the training data, the model is compared with the test data to determine if the model is overfitting, underfitting, or has good fit.
+
+**The first thing we need to do is to split our dataset into training and test data.** Since both training and test data come from the same dataset, they should follow the same pattern even if the data in both sets are different. **By creating a model using the training data and testing the model using the test data, we can determine how well the model can predict the pattern within the data.**
+
+**Depedent variables are variables that we are trying to predict.** In this case, the dependent variable is churn. **Independent variables are the variables used to predict the dependent variables.** The independent variables are the other variables except churn. **Both training and test variables need to be separated into independent and dependent variables.**
+
+The code below will first separate the data into dependent and independent data. Then it will take random sample of 25% of the data and assign it as test data. The remaining data will be assigned as training data.
+```
+# Make a copy of the data.
+# It's a good idea to keep the original data intact in case you need the data in the original dataframe.
+# Use the .copy() command to create a copy of the data.
+
+train_df = df.copy()
+
+# Separate target variable from independent variables.
+# The target variable is the variable you are trying to predict (churn).
+# The independant variables are the varibales you will use to predict the target variable (all variables except churn and id).
+
+y = df['churn']
+X = df.drop(columns=['id', 
+                     'churn'])
+
+# Create training and test data.
+# The test_size the is % of the original data that will be used for test data.
+# A typical % for test data is 20%-30%. We will use 25%.
+
+X_train, X_test, y_train, y_test = train_test_split(X, 
+                                                    y, 
+                                                    test_size = 0.25, 
+                                                    random_state = 42)
+```
+## 3. Training the Model
+**To train the model, we need to create a Random Forest model using the training data.** The model will use the training data, create decision trees, and will **predict whether a customer will churn or not by finding and learning patterns within the training data.**
+
+The code below will create a Random Forest model using the training data.
+```
+# Use the RandomForestClassifier() command to create a random forest model.
+
+model = RandomForestClassifier(n_estimators = 1000, 
+                               random_state = 42)
+
+# Use the .fit() command to fit the data into the model.
+# The data that we will fit into the model will be the training data, both x_train and y_train.
+
+fitted = model.fit(X_train, y_train)
+```
+
+## 4. Model Testing
+Now that we trained the Random Forest model, we will use the test data to test the model. **We test the model by using the test data as inputs for the Random Forest model. We will then use a confusion matrix to determine the accuracy, precision, and recall for the model.**
+
+The code below will take the Random Forest model we created and use the test data as input. It will then create a confusion matrix to determine how accurate the model is.
+```
+# Use the .predict() command to labels of the data values on the basis of the trained model.
+# Use the test data (X_test) as input.
+
+predictions = fitted.predict(X_test)
+
+# Use the metrics.confusion() command to compute confusion matrix to evaluate the accuracy of a classification.
+# Use the y_test variable as the true values.
+# Use predictions as the predicted values.
+# Use the .ravel() command to merge multiple arrays (tn, fp, fn, tp) to a single array.
+
+tn, fp, fn, tp = metrics.confusion_matrix(y_test, predictions).ravel()
+
+## Use the print() command to print out the results of the confusion matrix.
+
+print(f"True positives: {tp}")
+print(f"False positives: {fp}")
+print(f"True negatives: {tn}")
+print(f"False negatives: {fn}\n")
+
+print(f"Accuracy: {metrics.accuracy_score(y_test, predictions)}")
+print(f"Precision: {metrics.precision_score(y_test, predictions)}")
+print(f"Recall (Sensitivity): {metrics.recall_score(y_test, predictions)}")
+print(f"F1: {metrics.f1_score(y_test, predictions)}")
+```
+![Confusion Matrix Results](Confusion_Matrix.png)
+
+The above picture depicts the results of the confusion matrix.
+
+**True Positives (TP) are events where the model predicted a positive value (a customer will churn) and the data supports the model's prediction. False Positives (FP) are events where the model predicts a positive value but the data does not support the prediction.**
+
+**Similarly, True Negatives (TN) are events where the model predicts a negative value (a cusotmer will not churn) and the data supports the prediction. False Negatives (FN) are events where the model predicts a negative value but the data does noot support the prediction.**
+
+**Accuracy is the overall accuracy of the model.** It is calculated as TP + TN/TP + TN + FP + FN where TP + TN represents all the predictions that are correct and TP + TN + FP + FN represents all of the predictions.
+
+**Precision is the ability of the model to accurately predict positive values.** It is calculated as TP/TP + FP where TP represents  the values that the model correctly predicts will have a positive value and TP + FP represents all the values that the model predicts will have a positive value, regardless of whether it is correct or incorrect.
+
+**Recall is the ability of the model to accurately detect positive values.** It is calculated as TP/TP + FN where TP represents  the values that the model correctly predicts will have a positive value and TP + FN represents the actual number of positive values.
+
+**F1 represents how well the model can detect and accurately predict positive values.** It is calculated as 2 * (Precision * Recall)/(Precision + Recall).
+
+**Our model has a high accuracy score of 90.33%. If the model predicts that a value will be positive (yes, a customer will churn) or negative (no, a customer will not churn), there is a 90.33% chance that the prediction is accurate.**
+
+**Our model also has a high precision score of 84.21%.** Accuracy represents how well the model is able to predict both positive and negative values, while precision represents how well the model is able to predict positive values. The model has predicted 19 positive values and 16 of the predicted values are true. **This indicates that if the model predicts that a value is positive, there is a 84.21% chance that prediction is accurate.**
+
+**However, our model has a very low recall score of 4.37%.** Recall represents how well the model can detect positive values. There are a total of 366 values that are positive and the model was able to accurately predict 16 of them. **This means that our model can only detect 4.37% of positive values.**
+
+**Our model also has a very low F1 score.** The F1 score represents how accurate the model is at predicting and detecting positive and negative values. **A low F1 score indicated that either precision or recall is significantly lower than the other. Because the model has a high precision score and a low recall score, our F1 score is also low.**
+
+**A model with high precision and low recall means that our model is more cautious in its predictions. While it may miss a substantial number of customers who will churn, it will be confident in its predictions when it deos predict that a customer will churn.**
+
+## 5. Decision Tree Visualization
