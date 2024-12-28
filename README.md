@@ -116,7 +116,7 @@ from sklearn.tree import plot_tree
 df = pd.read_csv(r'C:/Users/jwebe/OneDrive/Desktop/data_for_predictions.csv')
 ```
 
-## 2. Data Sampling
+### 2. Data Sampling
 **Random Forest model is a supervised learning algorithm. Supervised learning algorithms requires training data to create the model.** Once the model is created using the training data, the model is compared with the test data to determine if the model is overfitting, underfitting, or has good fit.
 
 **The first thing we need to do is to split our dataset into training and test data.** Since both training and test data come from the same dataset, they should follow the same pattern even if the data in both sets are different. **By creating a model using the training data and testing the model using the test data, we can determine how well the model can predict the pattern within the data.**
@@ -148,7 +148,7 @@ X_train, X_test, y_train, y_test = train_test_split(X,
                                                     test_size = 0.25, 
                                                     random_state = 42)
 ```
-## 3. Training the Model
+### 3. Training the Model
 **To train the model, we need to create a Random Forest model using the training data.** The model will use the training data, create decision trees, and will **predict whether a customer will churn or not by finding and learning patterns within the training data.**
 
 The code below will create a Random Forest model using the training data.
@@ -164,7 +164,7 @@ model = RandomForestClassifier(n_estimators = 1000,
 fitted = model.fit(X_train, y_train)
 ```
 
-## 4. Model Testing
+### 4. Model Testing
 Now that we trained the Random Forest model, we will use the test data to test the model. **We test the model by using the test data as inputs for the Random Forest model. We will then use a confusion matrix to determine the accuracy, precision, and recall for the model.**
 
 The code below will take the Random Forest model we created and use the test data as input. It will then create a confusion matrix to determine how accurate the model is.
@@ -219,12 +219,87 @@ The above picture depicts the results of the confusion matrix.
 
 **A model with high precision and low recall means that our model is more cautious in its predictions. While it may miss a substantial number of customers who will churn, it will be confident in its predictions when it deos predict that a customer will churn.**
 
-## 5. Decision Tree Visualization
-A Decision Tree is a machine learning model that takes data and splits the data into different nodes by using if then else conditions. The portion of data that meets the condition will be placed in a node and the rest of the data will be placed in a different node. Each node is further split in the same way until all the data in a node has the same value. In our case, the decision tree will stop splitting a node if all the data in the node has a churn value of 1 or 0.
+### 5. Decision Tree Visualization
+**A Decision Tree is a machine learning model that takes the training data and splits the data into different nodes by using if then else conditions.** The subsection of training data that meets the condition will be placed in one node and the rest of the data will be placed in a different node. Each node is further split in the same way until all the data points in a node has the same value. In our case, the decision tree will stop splitting a node if all the data points in the node has a churn value of 1 or 0.
 
 The picture below is an example of a decision tree.
 
 ![An Example of a Decision Tree](Decision_Tree_Example.png)
 
-When inputting new data into a decision tree to determine which customers will churn or not, the model will take one data point, determine if that point meets the conditions in the top node and will place that data point into a lower level. This will continue until the data point reaches the bottom of the tree in which the data point is classified as churn or not churned. The process is repeated for all data points.
+When test data or future data is inputted into a Decision Tree, each data point starts at the top. Based on whether or not that data point meets the condition, it will take one of 2 paths downward. This continues until all data points reach the bottom, where they will be classified as "Churn" or "Not Churn".
 
+**Although a Decision Tree is an effective way to classify data, it is prone to overfitting. Overfitting occurs when a model performs well on the training data but poorly on new, unseen test data. It fits the training data too closely that it fails on the test data or future data.**
+
+**The Random Forest model minimizes overfitting by using multiple randomly created Decision Trees.** Unlike Decision Trees which use all data points and all features in the training data, the Random Forest model creates multiple Decision Trees using randomly selected data points and features in the training data. Each Decision Tree created in a Random Forest model is created using a different set of randomly chosen data points and features. **The Random Forest model we created in this project created 1000 randomly created Decision Trees.**
+
+**When test data or future data is inputted into a Random Forest Model, each data point goes through all Decision Trees made by the model. Each individual Decision Tree will classify the data points as "Churn" or "Not Churn". The Random Forest model will classify a data point by taking the most popular result.**
+
+The code below will create a visualization of one of the Decision Trees created from our Random Forest model.
+```
+# Use the plot_tree() command to plot a decision tree.
+# model.estimators[] is the tree you want to plot.
+# feature_names is the name of the variables used to predict the independant variable.
+# class_names is the name of the target classes.
+# filled colors the nodes.
+
+plt.figure(figsize=(80,40))
+plot_tree(model.estimators_[0], feature_names = X.columns, class_names = ['Churn', "No Churn"],filled = True);
+plt.show()
+```
+![A Decision Tree from Our Random Forest Model](Decision_Tree_Random_Forest.png)
+
+The start of the tree is located in the upper right. Although the Decision Tree uses a subset of training data and features, it is still a very large and extensive tree.
+
+### 6. Feature Importance
+**Feature importance is an indication of how important a feature is within a predictive model. Feature importance represents the number of times a feature is used to create conditional splits within all the Decision Trees created by the Random Forest model.**
+
+The code below is used to create a bar chart that depicts feature importance.
+```
+# Find the most important features that determine churn.
+# Use the .feature_importances_ command to find the importance values of each feature.
+
+fitted.feature_importances_
+
+#Create an importance dataframe that displays the features and importance level.
+
+feature_importance = pd.DataFrame({'Feature': X_train.columns, 
+                                   'Importance': fitted.feature_importances_})
+
+feature_importance.sort_values(by = 'Importance', 
+                               ascending = False, 
+                               inplace = True)
+
+# Use the fig, ax = plt.subplots() command to create a set of subplots within one cell.
+fig, ax = plt.subplots(1, 1, figsize=(15, 15))
+
+# Use the sns.barplot() command to create a bar plot.
+
+sns.barplot(data = feature_importance, 
+            x = 'Importance', 
+            y = 'Feature')
+
+ax.bar_label(ax.containers[0])
+
+plt.show()
+```
+![A Bar Chart for Feature Importance](Feature_Importance.png)
+
+Based on the char above:
+* The greatest driver for churn is the net margin on power subscription (0.064), followed by electricity consumption of the past 12 months (0.06), and total net margin (0.058).
+* Time is also an influential factor, such as the number of months a customer has been active (0.037), their tenure (0.016), and the number of months since they renewed their contract (0.02).
+* Features that are influential to churn tend to fall under power consumption and time.
+* Price senitivity features (variance in prices, max difference in price) are scattered. Some price sensitivity features have a higher influence on churn, such as the price variance between off peak and peak time. Most sensitiviy features, however, have very low influence on churn.
+* **This would suggest that our original hypothesis, that price senitivity is the main contributor for churn, is incorrect.**
+
+## Conclusion and Recommendations
+**The goal of the project is to analyze PowerCo's client and price data and determine potential causes for customer churn. One hypothesis for customer churn is price sensitiviy.** We have conducted exploratory data analysis on the data, used feature engineering to alter and create new features in the data, and created a Random Forest model to predict which customers will churn and determine which features have the most influence on customer churn.
+
+We have found that:
+* Our model has high accuracy and precision, but low recall. This means that when the model makes a prediction, there is a high probability that the model is correct. However, it has difficulty identifying customers who will churn.
+* Features with the most influence on customer churn are related to power consumption and time. This includes features such as net margin on power subscription, electricity consumption of the past 12 months, total net margin, number of months a customer has been active, tenure, and the number of months since they renewed their contract.
+* Price sensitivity is not a leading cause of churn. Price sensitiviy features are scattered with many have very low influence on churn.
+
+Recommdenations:
+* Since feature importance is based on our Random Forest model, we should rework the model to improve the recall score. This may include working more on feature analysis or adjusting the parameters of the model.
+* Focus on retaining newer customers or customers with tenure less than 8 years.
+* Add benefits or saving for customers with higher power consumption. For example, customers with a certain level of electricity consumption will have a discounted price for electricty for the next 6 months. 
