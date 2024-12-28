@@ -220,3 +220,11 @@ The above picture depicts the results of the confusion matrix.
 **A model with high precision and low recall means that our model is more cautious in its predictions. While it may miss a substantial number of customers who will churn, it will be confident in its predictions when it deos predict that a customer will churn.**
 
 ## 5. Decision Tree Visualization
+A Decision Tree is a machine learning model that takes data and splits the data into different nodes by using if then else conditions. The portion of data that meets the condition will be placed in a node and the rest of the data will be placed in a different node. Each node is further split in the same way until all the data in a node has the same value. In our case, the decision tree will stop splitting a node if all the data in the node has a churn value of 1 or 0.
+
+The picture below is an example of a decision tree.
+
+![An Example of a Decision Tree](Decision_Tree_Example.png)
+
+When inputting new data into a decision tree to determine which customers will churn or not, the model will take one data point, determine if that point meets the conditions in the top node and will place that data point into a lower level. This will continue until the data point reaches the bottom of the tree in which the data point is classified as churn or not churned. The process is repeated for all data points.
+
