@@ -17,7 +17,7 @@ PowerCo has expressed concern over their customers leaving them for better offer
 * Data Visualization
 
 ## Data Sourcing
-This original data was provided to me by the BCG X Data Science microinternship hosted by Forage. In part 2, feature engineering was conducted on the data. A copy of the altered data is included in this repository under the file name: data_for_predictions.csv.
+This original data was provided to me by the BCG X Data Science micro-internship hosted by Forage. In part 2, feature engineering was conducted on the data. A copy of the altered data is included in this repository under the file name: data_for_predictions.csv.
 
 ## Data Attributes
 The data contains information about power consumption, sales channels, forecasted power consumption, and whether the client has churned or not. Each row contains data for 1 client.
