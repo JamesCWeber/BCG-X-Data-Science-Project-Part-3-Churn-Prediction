@@ -1,4 +1,4 @@
-# Random Forest Model (BCG X Data Science Project Part 3)
+# Churn Prediction (BCG X Data Science Project Part 3)
 ![Introductory Picture](Random_Forest.png)
 ## Introduction
 This is Part 3 of a project from the [BCG X Data Science micro-internship](https://www.theforage.com/simulations/bcg/data-science-ccdz). The Boston Consulting Group (BCG) is an American global consulting firm that  partners with leaders in business and society to tackle their most important challenges. It is one of the world's 3 largest consulting firms along with McKinsey & Company and Bain & Company. BCG X is a new initiative from BCG that combines the firm's consulting expertise with tech building and design.
