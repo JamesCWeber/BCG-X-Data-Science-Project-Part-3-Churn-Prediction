@@ -10,6 +10,7 @@ PowerCo has expressed concern over their customers leaving them for better offer
 
 ## Skills Demonstrated
 * Python
+* Juypiter Notebook
 * Machine Learning
 * Random Forest
 * Training and Testing Machine Learning Models
