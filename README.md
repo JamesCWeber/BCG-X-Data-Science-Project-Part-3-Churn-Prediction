@@ -15,7 +15,7 @@ PowerCo has expressed concern over their customers leaving them for better offer
 * Random Forest
 * Training and Testing Machine Learning Models
 * Data Manipulation
-* Data Visualization
+* Data Visualization (Random Forest Decision Tree, Bar Chart)
 
 ## Data Sourcing
 This original data was provided to me by the BCG X Data Science micro-internship hosted by Forage. In part 2, feature engineering was conducted on the data. A copy of the altered data is included in this repository under the file name: data_for_predictions.csv.
