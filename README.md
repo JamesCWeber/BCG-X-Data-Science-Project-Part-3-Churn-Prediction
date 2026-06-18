@@ -30,7 +30,7 @@ These attributes are included in the original data:
 * cons_last_month - Electricity consumption of the last month.
 * forecast_cons_12m - FForecasted electricity consumption for next 12 months.
 * forecast_discount_energy - Forecasted value of current discount.
-* forecast_meter_rent_12m - Forecasted bill of meter rental for the next 2 months.
+* forecast_meter_rent_12m - Forecasted bill of meter rental for the next 12 months.
 * forecast_price_energy_off_peak - Forecasted energy price for 1st period (off peak).
 * forecast_price_energy_peak - Forecasted energy price for 2nd period (peak).
 * forecast_price_pow_off_peak - Forecasted power price for 1st period (off peak).
