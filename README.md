@@ -297,10 +297,12 @@ Based on the char above:
 
 We have found that:
 * Our model has high accuracy and precision, but low recall. This means that when the model makes a prediction, there is a high probability that the model is correct. However, it has difficulty identifying customers who will churn.
-* Features with the most influence on customer churn are related to power consumption and time. This includes features such as net margin on power subscription, electricity consumption of the past 12 months, total net margin, number of months a customer has been active, tenure, and the number of months since they renewed their contract.
-* Price sensitivity is not a leading cause of churn. Price sensitiviy features are scattered with many have very low influence on churn.
+* The dominant predictors of customer churn are financial margin characteristics such as margin_net_pow_ele (0.064), and net_margin (0.058) which are ranked the first and third most influencial features.
+* Consumption history and forecast features like cons_12m (0.06) and forecast_cons_12m (0.054) have high predictive weight. High-volume business accounts likely have dedicated procurement managers looking to cut energy costs, making them flight risks.
+* Time and tenure featues like months_activ (0.037) and months_modif_prod (0.034) have average predictive weight. Churn behavior heavily correlates with how long the contract has been running and how long it has been since they last updated their product tier.
+* Although PowerCo is highly concerned about competitors' offers, the absolute and relative pricing differences appear lower down the list than volume and margins. Price sensitivity features like energy_mean_diff_off_peak_peak (0.035), variance_1y_off_peak_var (0.033) have a measurable but secondary impact. The spread between peak and off-peak pricing drives churn more than raw forecasted prices. Customers with high off-peak variance are likely optimization-sensitive.
 
 Recommdenations:
-* Since feature importance is based on our Random Forest model, we should rework the model to improve the recall score. This may include working more on feature analysis or adjusting the parameters of the model.
-* Focus on retaining newer customers or customers with tenure less than 8 years.
-* Add benefits or saving for customers with higher power consumption. For example, customers with a certain level of electricity consumption will have a discounted price for electricty for the next 6 months. 
+* Implement a watchlist for customers accounts with high net margin on power subscription (margin_net_pow_ele) and high electricity consumption of the past 12 months (cons_12m) immediately. These are PowerCo's most profitable, high-volume customers who are actively shopping around.
+* Use the number of months since the customer's last modification of the contract (months_modif_prod) to trigger proactive account reviews. If an account has stagnated on the same product tier for too long, proactively offer them a optimized rate structure before a competitor does.
+* The average difference in energy price between off peak and peak hours (energy_mean_diff_off_peak_peak) is the top pricing feature. PowerCo should design retention offers that specifically optimize peak/off-peak spreads for high-risk business profiles.
