@@ -28,7 +28,7 @@ These attributes are included in the original data:
 * cons_12m - Electricity consumption of the past 12 months.
 * cons_gas_12m - Gas consumption of the past 12 months.
 * cons_last_month - Electricity consumption of the last month.
-* forecast_cons_12m - FForecasted electricity consumption for next 12 months.
+* forecast_cons_12m - Forecasted electricity consumption for next 12 months.
 * forecast_discount_energy - Forecasted value of current discount.
 * forecast_meter_rent_12m - Forecasted bill of meter rental for the next 12 months.
 * forecast_price_energy_off_peak - Forecasted energy price for 1st period (off peak).
